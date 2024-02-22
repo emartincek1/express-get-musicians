@@ -83,6 +83,26 @@ describe("./musicians endpoint", () => {
     const musicians = await Musician.findAll();
     expect(response.body.length).toBe(musicians.length);
   });
+
+  test("post musicians returns errors array if feilds aren't provided", async () => {
+    const response = await request(app)
+      .post("/musicians")
+      .send({
+        musician: { name: "qwe" },
+      });
+    expect(response.body).toHaveProperty("error");
+    expect(Array.isArray(response.body.error)).toBe(true);
+  });
+
+  test("post musicians returns errors array if name is too short", async () => {
+    const response = await request(app)
+      .post("/musicians")
+      .send({
+        musician: { name: "L", instrument: "Voice" },
+      });
+    expect(response.body).toHaveProperty("error");
+    expect(Array.isArray(response.body.error)).toBe(true);
+  });
 });
 
 describe("./bands endpoint", () => {

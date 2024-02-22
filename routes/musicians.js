@@ -26,8 +26,12 @@ musicianRouter.get("/:id", async (req, res, next) => {
 musicianRouter.post(
   "/",
   [
-    check("musician.name").not().isEmpty().trim(),
-    check("musician.instrument").not().isEmpty().trim(),
+    check("musician.name").not().isEmpty().trim().isLength({ min: 2, max: 20 }),
+    check("musician.instrument")
+      .not()
+      .isEmpty()
+      .trim()
+      .isLength({ min: 2, max: 20 }),
   ],
   async (req, res, next) => {
     try {
@@ -49,8 +53,12 @@ musicianRouter.post(
 musicianRouter.put(
   "/:id",
   [
-    check("musician.name").not().isEmpty().trim(),
-    check("musician.instrument").not().isEmpty().trim(),
+    check("musician.name").not().isEmpty().trim().isLength({ min: 2, max: 20 }),
+    check("musician.instrument")
+      .not()
+      .isEmpty()
+      .trim()
+      .isLength({ min: 2, max: 20 }),
   ],
   async (req, res, next) => {
     try {
