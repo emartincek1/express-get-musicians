@@ -3,9 +3,13 @@ const musicianRouter = Router();
 const { Musician } = require("../models/index");
 const { check, validationResult } = require("express-validator");
 
-musicianRouter.get("/", async (req, res) => {
-  const musicians = await Musician.findAll();
-  res.json(musicians);
+musicianRouter.get("/", async (req, res, next) => {
+  try {
+    const musicians = await Musician.findAll();
+    res.json(musicians);
+  } catch (err) {
+    next(err);
+  }
 });
 
 musicianRouter.get("/:id", async (req, res, next) => {

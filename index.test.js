@@ -84,3 +84,29 @@ describe("./musicians endpoint", () => {
     expect(response.body.length).toBe(musicians.length);
   });
 });
+
+describe("./bands endpoint", () => {
+  test("Testing get bands endpoint", async () => {
+    const response = await request(app).get("/bands");
+    expect(response.statusCode).toBe(200);
+    expect(response.body[0]).toEqual(
+      expect.objectContaining({
+        name: "The Beatles",
+        genre: "Rock",
+      })
+    );
+    expect(Array.isArray(response.body[0].musicians)).toBe(true);
+  });
+
+  test("Testing get bands/:id endpoint", async () => {
+    const response = await request(app).get("/bands/2");
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        name: "Black Pink",
+        genre: "Pop",
+      })
+    );
+    expect(Array.isArray(response.body.musicians)).toBe(true);
+  });
+});
